@@ -42,8 +42,7 @@ public class AdministradorDAO implements IBaseDatos<Administrador> {
         }
         try {
             System.out.println("entro");
-            Statement st;
-            st = connection.createStatement();
+            Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
             int id = 0;
             String nombre = null, apellido = null;
