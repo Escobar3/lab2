@@ -37,20 +37,24 @@ public class AdministradorDAO implements IBaseDatos<Administrador> {
         
         System.out.println(query);
         System.out.println("----");
-        Connection connection = Conexion.getConnection();
+       Connection connection = null;
+        try {
+            connection = Conexion.getConnection();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(AdministradorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             System.out.println("entro");
-            Statement st = connection.createStatement();
-
-            ResultSet rs = st.executeQuery(query);           
+              Statement st = connection.createStatement();
+            ResultSet rs = st.executeQuery(query);        
             int id = 0;
             String nombre = null, apellido = null;
             String user = null, clave = null;
+              nombre = rs.getString("nombre");
+              System.out.println( nombre);
             if (rs.next()) {
-               
                 
                 id = rs.getInt("id_Adm");
-                
                 nombre = rs.getString("nombre");
                 apellido = rs.getString("apellido");
                 user = rs.getString("usuario");
