@@ -25,7 +25,6 @@ import java.util.logging.Logger;
 import java.time.LocalDate;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
-
 /**
  *
  * @author LUIS
