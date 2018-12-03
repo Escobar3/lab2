@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 public class VentasP extends HttpServlet {
 ProductoDAO producto;
 Producto p ;
-List<Producto> inven = new ArrayList<>();
+List<Producto> inven = new ArrayList<Producto>();
 
     @Override
     public void init() throws ServletException {

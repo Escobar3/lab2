@@ -40,8 +40,8 @@ public class Caja_Servlet extends HttpServlet {
     VentaDAO venta;
     private Venta ven;
     private List<Producto> listProdutos;
-    List<Producto> inven = new ArrayList<>();
-    List<Item_vent> items = new ArrayList<>();
+    List<Producto> inven = new ArrayList<Producto>();
+    List<Item_vent> items = new ArrayList<Item_vent>();
 
     @Override
     public void init() throws ServletException {

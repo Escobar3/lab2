@@ -32,7 +32,7 @@ public class InventarioServlet2 extends HttpServlet {
 
     ProductoDAO producto;
     private List<Producto> listProdutos;
-    List<Producto> inven = new ArrayList<>();
+    List <Producto> inven = new ArrayList<Producto>();
 
     @Override
     public void init() throws ServletException {
