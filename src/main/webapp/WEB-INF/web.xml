@@ -80,6 +80,10 @@
         <servlet-name>RegistroServlet</servlet-name>
         <url-pattern>/RegistroServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+		<servlet-name>default</servlet-name>
+		<url-pattern>/resources/*</url-pattern>
+	</servlet-mapping>
     <session-config>
         <session-timeout>
             30
