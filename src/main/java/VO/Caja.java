@@ -6,7 +6,7 @@
 package VO;
 
 import java.io.Serializable;
-import javafx.collections.ObservableList;
+import java.util.List;
 
 /**
  *
@@ -60,7 +60,7 @@ public class Caja implements Serializable {
         return precio;
     }
 
-    public double calS(ObservableList<Producto> inven) {
+    public double calS(List<Producto> inven) {
         double sub = 0.0;
         for (int i = 0; i < inven.size(); i++) {
             sub = sub + inven.get(i).getPrecio();

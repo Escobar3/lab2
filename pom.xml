@@ -20,6 +20,9 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.guigarage/javafx-collection -->
+
+
             <dependency>
                   <groupId>org.jasonjson</groupId>
                   <artifactId>jason</artifactId>
