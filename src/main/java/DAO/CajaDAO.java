@@ -9,6 +9,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import VO.Caja;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,7 +25,7 @@ public class CajaDAO implements IBaseDatos<Caja> {
         return connection;
     }
 
-    public Caja find(int id) throws SQLException {
+    public Caja find(int id) throws SQLException, URISyntaxException {
 
         Caja resultado = null;
         String query = "Select * from caja Where id_caja =" + id;
@@ -58,7 +61,12 @@ public class CajaDAO implements IBaseDatos<Caja> {
         List<Caja> cajas = null;
         String query = "Select * from caja ";
 
-        Connection connection = Conexion.getConnection();
+        Connection connection = null;
+        try {
+            connection = Conexion.getConnection();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(CajaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
@@ -92,7 +100,12 @@ public class CajaDAO implements IBaseDatos<Caja> {
     @Override
     public boolean insert(Caja t) throws SQLException {
         boolean result = false;
-        Connection connection = Conexion.getConnection();
+        Connection connection = null;
+        try {
+            connection = Conexion.getConnection();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(CajaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String query = " insert into caja (Dinero,id_sucursal) values (?,?)";
         PreparedStatement preparedStmt = null;
         try {
@@ -110,7 +123,12 @@ public class CajaDAO implements IBaseDatos<Caja> {
     @Override
     public boolean update(Caja t) throws SQLException {
         boolean result = false;
-        Connection connection = Conexion.getConnection();
+        Connection connection = null;
+        try {
+            connection = Conexion.getConnection();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(CajaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String query = "update Caja set  Dinero = ?,id_sucursal=? where id_caja = ?";
         PreparedStatement preparedStmt = null;
         try {

@@ -5,6 +5,8 @@
  */
 package DAO;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.*;
 
 /**
@@ -15,27 +17,18 @@ public class Conexion {
 
     private static Connection CONEXION = null;
 
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() throws SQLException, URISyntaxException {
+        URI dbUri = new URI(System.getenv("DATABASE_URL"));
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+
         if (CONEXION == null) {
             try {
-                Class.forName("com.mysql.jdbc.Driver").newInstance();
-                //Integracion Log4J
-            } catch (ClassNotFoundException e) {
-                throw new SQLException(e);
-            } catch (InstantiationException e) {
-                //Integracion Log4J
-                throw new SQLException(e);
-            } catch (IllegalAccessException e) {
-                //Integracion Log4J
-                throw new SQLException(e);
-            }
-
-            try {
-                
-                CONEXION = DriverManager.getConnection("jdbc:mysql://localhost:3306/BDlab", "root", "root");
-               
+                CONEXION = DriverManager.getConnection(dbUrl, username, password);
             } catch (SQLException e) {
-                throw new SQLException(e);
+                System.out.println("Connection Failed! Check output console");
+                e.printStackTrace();
             }
 
         }
@@ -56,6 +49,3 @@ public class Conexion {
 
     }
 }
-
-
-

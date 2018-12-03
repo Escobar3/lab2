@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import DAO.*;
 import VO.*;
+import java.net.URISyntaxException;
 import javax.servlet.annotation.WebServlet;
 import java.sql.SQLException;
 
@@ -183,6 +184,8 @@ public class Caja_Servlet extends HttpServlet {
 
                 }
             } catch (SQLException ex) {
+                Logger.getLogger(Caja_Servlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (URISyntaxException ex) {
                 Logger.getLogger(Caja_Servlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

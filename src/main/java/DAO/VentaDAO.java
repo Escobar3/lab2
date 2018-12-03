@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import VO.*;
+import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,7 @@ public class VentaDAO implements IBaseDatos<Venta> {
         return connection;
     }
 
-    public Venta find(int id) throws SQLException {
+    public Venta find(int id) throws SQLException, URISyntaxException {
         Vendedor vendedor = new Vendedor();
         Caja caja = new Caja();
         Venta resultado = new Venta();
@@ -71,7 +72,12 @@ public class VentaDAO implements IBaseDatos<Venta> {
         Vendedor vendedor = new Vendedor();
         Caja caja = new Caja();
         String query = "SELECT * FROM ventas";
-        Connection connection = Conexion.getConnection();
+        Connection connection = null;
+        try {
+            connection = Conexion.getConnection();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
@@ -119,7 +125,12 @@ public class VentaDAO implements IBaseDatos<Venta> {
     @Override
     public boolean insert(Venta t) throws SQLException {
         boolean result = false;
-        Connection connection = Conexion.getConnection();
+        Connection connection = null;
+        try {
+            connection = Conexion.getConnection();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         PreparedStatement preparedStmt = null;
         try {
@@ -146,7 +157,7 @@ public class VentaDAO implements IBaseDatos<Venta> {
         return result;
     }
 
-    public boolean insert1(Venta t) throws SQLException {
+    public boolean insert1(Venta t) throws SQLException, URISyntaxException {
         boolean result = false;
         Connection connection = Conexion.getConnection();
         String query = " insert into ventas (valor,id_vendedor,id_caja,dato) values (?,?,?,?)";
@@ -168,7 +179,12 @@ public class VentaDAO implements IBaseDatos<Venta> {
     @Override
     public boolean update(Venta t) throws SQLException {
         boolean result = false;
-        Connection connection = Conexion.getConnection();
+        Connection connection = null;
+        try {
+            connection = Conexion.getConnection();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VentaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String query
                 = "update ventas set  valor = ?,id_vendedor=?,id_caja=?,dato= ? where id_ventas = ?";
         PreparedStatement preparedStmt = null;
@@ -190,7 +206,7 @@ public class VentaDAO implements IBaseDatos<Venta> {
         return result;
     }
 
-    public Venta buscarUltimaVenda() throws SQLException {
+    public Venta buscarUltimaVenda() throws SQLException, URISyntaxException {
         String query = "SELECT max(id_ventas) FROM ventas";
         System.out.println(query);
         Venta retorno = new Venta();

@@ -11,6 +11,7 @@ import VO.Producto;
 import VO.Vendedor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -68,6 +69,8 @@ public class ReportServlet extends HttpServlet {
                 listProdutos = producto.ConsulP_item();
             } catch (SQLException ex) {
                 Logger.getLogger(Caja_Servlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
             System.out.println(listProdutos.size());
 
@@ -79,6 +82,8 @@ public class ReportServlet extends HttpServlet {
                 listVendedor = vendedor.ConsulVe_vent();
             } catch (SQLException ex) {
                 Logger.getLogger(Caja_Servlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (URISyntaxException ex) {
+                Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
 
             request.setAttribute("lista2", listVendedor);
@@ -110,6 +115,8 @@ public class ReportServlet extends HttpServlet {
                     listProdutos = producto.ConsulP_item();
                 } catch (SQLException ex) {
                     Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (URISyntaxException ex) {
+                    Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 JsonArray varJObjectLista = metGetListaP(listProdutos, varJsonArrayP);
                 escritor.print(varJObjectLista);
@@ -120,6 +127,8 @@ public class ReportServlet extends HttpServlet {
 
                     listVendedor = vendedor.ConsulVe_vent();
                 } catch (SQLException ex) {
+                    Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (URISyntaxException ex) {
                     Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 JsonArray varJObjectLista2 = metGetListaV(listVendedor, varJsonArrayV);

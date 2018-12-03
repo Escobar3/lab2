@@ -9,6 +9,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import VO.Vendedor;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,7 +25,7 @@ public class VendedorDAO implements IBaseDatos<Vendedor> {
         return connection;
     }
 
-    public Vendedor find(String usuario) throws SQLException {
+    public Vendedor find(String usuario) throws SQLException, URISyntaxException {
         Vendedor resultado = null;
         String query = "Select * from Vendedor Where usuario ='" + usuario + "'";
         System.out.println(query);
@@ -61,7 +64,12 @@ public class VendedorDAO implements IBaseDatos<Vendedor> {
     public List findAll() throws SQLException {
         List<Vendedor> vendedors = null;
         String query = "SELECT * FROM Vendedor";
-        Connection connection = Conexion.getConnection();
+        Connection connection = null;
+        try {
+            connection = Conexion.getConnection();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VendedorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
@@ -100,7 +108,12 @@ public class VendedorDAO implements IBaseDatos<Vendedor> {
     @Override
     public boolean insert(Vendedor t) throws SQLException {
         boolean result = false;
-        Connection connection = Conexion.getConnection();
+        Connection connection = null;
+        try {
+            connection = Conexion.getConnection();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(VendedorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String query = " insert into Vendedor (id_vendedor,usuario,clave,nombre,apellido,id_sucursal ) values (?,?,?,?,?,?)";
         PreparedStatement preparedStmt = null;
         try {
@@ -129,7 +142,7 @@ public class VendedorDAO implements IBaseDatos<Vendedor> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public List ConsulVe_vent() throws SQLException {
+    public List ConsulVe_vent() throws SQLException, URISyntaxException {
         List<Vendedor> vendedors = null;
         String query = "SELECT ventas.id_vendedor,vendedor.nombre, COUNT(*)as total\n"
                 + "from vendedor inner join ventas on(vendedor.id_vendedor=ventas.id_vendedor)\n"

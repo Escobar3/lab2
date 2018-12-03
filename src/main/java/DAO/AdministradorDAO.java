@@ -13,6 +13,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import VO.Administrador;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,7 +29,7 @@ public class AdministradorDAO implements IBaseDatos<Administrador> {
         return connection;
     }
 
-    public Administrador find(String usuario) throws SQLException {
+    public Administrador find(String usuario) throws SQLException, URISyntaxException {
         Administrador resultado = null;
         System.out.println(usuario);
        
@@ -69,7 +72,12 @@ public class AdministradorDAO implements IBaseDatos<Administrador> {
     public List findAll() throws SQLException {
         List<Administrador> administradors = null;
         String query = "SELECT * FROM Administrador";
-        Connection connection = Conexion.getConnection();
+        Connection connection = null;
+        try {
+            connection = Conexion.getConnection();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(AdministradorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(query);
@@ -107,7 +115,12 @@ public class AdministradorDAO implements IBaseDatos<Administrador> {
     @Override
     public boolean insert(Administrador t) throws SQLException {
         boolean result = false;
-        Connection connection = Conexion.getConnection();
+        Connection connection = null;
+        try {
+            connection = Conexion.getConnection();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(AdministradorDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String query = " insert into administrador (id_Adm,usuario,clave,nombre,apellido) values (?,?,?,?,?)";
         PreparedStatement preparedStmt = null;
         try {

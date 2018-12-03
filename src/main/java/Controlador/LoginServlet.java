@@ -13,6 +13,7 @@ import VO.Administrador;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,6 +97,8 @@ public class LoginServlet extends HttpServlet {
                     Adm = admon.find(Usuario);
                     vend = vendedor.find(Usuario);
                 } catch (SQLException ex) {
+                    Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (URISyntaxException ex) {
                     Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
 

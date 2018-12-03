@@ -16,6 +16,7 @@ import org.jasonjson.core.JsonObject;
 import org.jasonjson.core.JsonArray;
 import DAO.*;
 import VO.*;
+import java.net.URISyntaxException;
 
 import java.sql.SQLException;
 
@@ -110,6 +111,8 @@ public class InventarioServlet2 extends HttpServlet {
                         producto.update(p);
                     }
                 } catch (SQLException ex) {
+                    Logger.getLogger(InventarioServlet2.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (URISyntaxException ex) {
                     Logger.getLogger(InventarioServlet2.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
