@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.time.LocalDate;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
+import org.jasonjson.core.JsonObject;
+import org.jasonjson.core.JsonArray;
 /**
  *
  * @author LUIS
@@ -114,7 +114,7 @@ public class Caja_Servlet extends HttpServlet {
             throws ServletException, IOException {
 
         String txtValop = request.getParameter("txtValOpe");
-        JSONArray varJsonArrayP = new JSONArray();
+        JsonArray varJsonArrayP = new JsonArray();
         response.setContentType("text/html");
         PrintWriter escritor = response.getWriter();
         String idP = request.getParameter("productos");
@@ -160,7 +160,7 @@ public class Caja_Servlet extends HttpServlet {
                         System.out.println(ven.getItem_vents().size());
                         System.out.println("enviando");
 
-                        JSONArray varJObjectLista = metGetLista(inven, varJsonArrayP);
+                        JsonArray varJObjectLista = metGetLista(inven, varJsonArrayP);
                         escritor.print(varJObjectLista);
 
                     }
@@ -201,33 +201,34 @@ public class Caja_Servlet extends HttpServlet {
 
     ;
     
-    public JSONArray metGetLista(List<Producto> in, JSONArray varJsonArrayP) {
+    public JsonArray metGetLista(List<Producto> in, JsonArray varJsonArrayP) {
 
-        JSONObject varJsonObjectResultado = new JSONObject();
+        JsonObject varJsonObjectResultado = new JsonObject();
         try {
             for (int i = 0; i < in.size(); i++) {
-                JSONObject varJsonObjectP = new JSONObject();
+                JsonObject varJsonObjectP = new JsonObject();
 
                 System.out.println("------------------------");
                 Producto p = in.get(i);
-                varJsonObjectP.put("id", p.getId_producto());
-                varJsonObjectP.put("nombre", p.getNombre());
-                varJsonObjectP.put("cantidad", p.getCantidad());
-                varJsonObjectP.put("precio", p.getPrecio());
+                
+                varJsonObjectP.addProperty("id", p.getId_producto());
+                varJsonObjectP.addProperty("nombre", p.getNombre());
+                varJsonObjectP.addProperty("cantidad", p.getCantidad());
+                varJsonObjectP.addProperty("precio", p.getPrecio());
                 varJsonArrayP.add(varJsonObjectP);
-                varJsonObjectP = (JSONObject) varJsonArrayP.get(i);
+                varJsonObjectP = (JsonObject) varJsonArrayP.get(i);
                 System.out.println("-------------------");
-                System.out.println(varJsonObjectP.toJSONString());
+                System.out.println(varJsonObjectP.toString().toString());
                 System.out.println("-----------------------------");
                 System.out.println(varJsonArrayP.get(i));
 
             }
-            varJsonObjectResultado.put("Result", "OK");
-            varJsonObjectResultado.put("Records", varJsonArrayP);
+            varJsonObjectResultado.addProperty("Result", "OK");
+            varJsonObjectResultado.add("Records", varJsonArrayP);
         } catch (Exception e) {
             e.printStackTrace();
-            varJsonObjectResultado.put("Result", "ERROR");
-            varJsonObjectResultado.put("Message", e.getMessage());
+            varJsonObjectResultado.addProperty("Result", "ERROR");
+            varJsonObjectResultado.addProperty("Message", e.getMessage());
         }
         return varJsonArrayP;
     }

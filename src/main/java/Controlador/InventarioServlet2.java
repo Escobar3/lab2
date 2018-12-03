@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
+import org.jasonjson.core.JsonObject;
+import org.jasonjson.core.JsonArray;
 import DAO.*;
 import VO.*;
 
@@ -78,7 +78,7 @@ public class InventarioServlet2 extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String txtValop = request.getParameter("txtValOpe");
-        JSONArray varJsonArrayP = new JSONArray();
+        JsonArray varJsonArrayP = new JsonArray();
         response.setContentType("text/html");
         PrintWriter escritor = response.getWriter();
         String nombre = request.getParameter("producto");
@@ -121,10 +121,10 @@ public class InventarioServlet2 extends HttpServlet {
                     Logger.getLogger(InventarioServlet2.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 if (inven != null) {
-                    JSONArray varJObjectLista = metGetLista(inven, varJsonArrayP);
+                    JsonArray varJObjectLista = metGetLista(inven, varJsonArrayP);
                     escritor.print(varJObjectLista);
                 } else {
-                    JSONArray varJObjectLista = new JSONArray();
+                    JsonArray varJObjectLista = new JsonArray();
                     escritor.print("null");
                 }
             }
@@ -142,33 +142,33 @@ public class InventarioServlet2 extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public JSONArray metGetLista(List<Producto> in, JSONArray varJsonArrayP) {
+    public JsonArray metGetLista(List<Producto> in, JsonArray varJsonArrayP) {
 
-        JSONObject varJsonObjectResultado = new JSONObject();
+        JsonObject varJsonObjectResultado = new JsonObject();
         try {
             for (int i = 0; i < in.size(); i++) {
-                JSONObject varJsonObjectP = new JSONObject();
+                JsonObject varJsonObjectP = new JsonObject();
 
                 System.out.println("------------------------");
                 Producto p = in.get(i);
-                varJsonObjectP.put("id", p.getId_producto());
-                varJsonObjectP.put("nombre", p.getNombre());
-                varJsonObjectP.put("cantidad", p.getCantidad());
-                varJsonObjectP.put("precio", p.getPrecio());
+                varJsonObjectP.addProperty("id", p.getId_producto());
+                varJsonObjectP.addProperty("nombre", p.getNombre());
+                varJsonObjectP.addProperty("cantidad", p.getCantidad());
+                varJsonObjectP.addProperty("precio", p.getPrecio());
                 varJsonArrayP.add(varJsonObjectP);
-                varJsonObjectP = (JSONObject) varJsonArrayP.get(i);
+                varJsonObjectP = (JsonObject) varJsonArrayP.get(i);
                 System.out.println("-------------------");
-                System.out.println(varJsonObjectP.toJSONString());
+                System.out.println(varJsonObjectP.toString());
                 System.out.println("-----------------------------");
                 System.out.println(varJsonArrayP.get(i));
 
             }
-            varJsonObjectResultado.put("Result", "OK");
-            varJsonObjectResultado.put("Records", varJsonArrayP);
+            varJsonObjectResultado.addProperty("Result", "OK");
+            varJsonObjectResultado.add("Records", varJsonArrayP);
         } catch (Exception e) {
             e.printStackTrace();
-            varJsonObjectResultado.put("Result", "ERROR");
-            varJsonObjectResultado.put("Message", e.getMessage());
+            varJsonObjectResultado.addProperty("Result", "ERROR");
+            varJsonObjectResultado.addProperty("Message", e.getMessage());
         }
         return varJsonArrayP;
     }

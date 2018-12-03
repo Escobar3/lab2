@@ -20,9 +20,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
+import org.jasonjson.core.JsonObject;
+import org.jasonjson.core.JsonArray;
 /**
  *
  * @author Luis
@@ -100,8 +99,8 @@ public class ReportServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String txtValop = request.getParameter("txtValOpe");
- JSONArray varJsonArrayP = new JSONArray();
- JSONArray varJsonArrayV= new JSONArray();
+ JsonArray varJsonArrayP = new JsonArray();
+ JsonArray varJsonArrayV= new JsonArray();
         PrintWriter escritor = response.getWriter();
         if (txtValop != null) {
 
@@ -112,7 +111,7 @@ public class ReportServlet extends HttpServlet {
                 } catch (SQLException ex) {
                     Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JSONArray varJObjectLista = metGetListaP(listProdutos, varJsonArrayP);
+                JsonArray varJObjectLista = metGetListaP(listProdutos, varJsonArrayP);
                 escritor.print(varJObjectLista);
 
             } else if (txtValop.equalsIgnoreCase("VE")) {
@@ -123,7 +122,7 @@ public class ReportServlet extends HttpServlet {
                 } catch (SQLException ex) {
                     Logger.getLogger(ReportServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JSONArray varJObjectLista2 = metGetListaV(listVendedor, varJsonArrayV);
+                JsonArray varJObjectLista2 = metGetListaV(listVendedor, varJsonArrayV);
                 escritor.print(varJObjectLista2);
             }
         }
@@ -136,64 +135,64 @@ public class ReportServlet extends HttpServlet {
      * @param varJsonArrayP
      * @return a String containing servlet description
      */
-    public JSONArray metGetListaV(List<Vendedor> in, JSONArray varJsonArrayV) {
+    public JsonArray metGetListaV(List<Vendedor> in, JsonArray varJsonArrayV) {
 
-        JSONObject varJsonObjectResultado = new JSONObject();
+        JsonObject varJsonObjectResultado = new JsonObject();
         try {
             for (int i = 0; i < in.size(); i++) {
-                JSONObject varJsonObjectP = new JSONObject();
+                JsonObject varJsonObjectP = new JsonObject();
 
                 System.out.println("------------------------");
                 Vendedor p = in.get(i);
-                varJsonObjectP.put("nombre", p.getNombre());
-                varJsonObjectP.put("cantidad", p.getProductos_vend());
-                varJsonObjectP.put("porcentage", p.getPorcentaje());
+                varJsonObjectP.addProperty("nombre", p.getNombre());
+                varJsonObjectP.addProperty("cantidad", p.getProductos_vend());
+                varJsonObjectP.addProperty("porcentage", p.getPorcentaje());
 
                 varJsonArrayV.add(varJsonObjectP);
-                varJsonObjectP = (JSONObject) varJsonArrayV.get(i);
+                varJsonObjectP = (JsonObject) varJsonArrayV.get(i);
                 System.out.println("-------------------");
-                System.out.println(varJsonObjectP.toJSONString());
+                System.out.println(varJsonObjectP.toString());
                 System.out.println("-----------------------------");
                 System.out.println(varJsonArrayV.get(i));
 
             }
-            varJsonObjectResultado.put("Result", "OK");
-            varJsonObjectResultado.put("Records", varJsonArrayV);
+            varJsonObjectResultado.addProperty("Result", "OK");
+            varJsonObjectResultado.add("Records", varJsonArrayV);
         } catch (Exception e) {
             e.printStackTrace();
-            varJsonObjectResultado.put("Result", "ERROR");
-            varJsonObjectResultado.put("Message", e.getMessage());
+            varJsonObjectResultado.addProperty("Result", "ERROR");
+            varJsonObjectResultado.addProperty("Message", e.getMessage());
         }
         return varJsonArrayV;
     }
 
-    public JSONArray metGetListaP(List<Producto> in, JSONArray varJsonArrayP) {
+    public JsonArray metGetListaP(List<Producto> in, JsonArray varJsonArrayP) {
 
-        JSONObject varJsonObjectResultado = new JSONObject();
+        JsonObject varJsonObjectResultado = new JsonObject();
         try {
             for (int i = 0; i < in.size(); i++) {
-                JSONObject varJsonObjectP = new JSONObject();
+                JsonObject varJsonObjectP = new JsonObject();
 
                 System.out.println("------------------------");
                 Producto p = in.get(i);
-                varJsonObjectP.put("id", p.getId_producto());
-                varJsonObjectP.put("nombre", p.getNombre());
-                varJsonObjectP.put("cantidad", p.getCantidad());
-                varJsonObjectP.put("porcentage", p.getPorcentaje());
+                varJsonObjectP.addProperty("id", p.getId_producto());
+                varJsonObjectP.addProperty("nombre", p.getNombre());
+                varJsonObjectP.addProperty("cantidad", p.getCantidad());
+                varJsonObjectP.addProperty("porcentage", p.getPorcentaje());
                 varJsonArrayP.add(varJsonObjectP);
-                varJsonObjectP = (JSONObject) varJsonArrayP.get(i);
+                varJsonObjectP = (JsonObject) varJsonArrayP.get(i);
                 System.out.println("-------------------");
-                System.out.println(varJsonObjectP.toJSONString());
+                System.out.println(varJsonObjectP.toString());
                 System.out.println("-----------------------------");
                 System.out.println(varJsonArrayP.get(i));
 
             }
-            varJsonObjectResultado.put("Result", "OK");
-            varJsonObjectResultado.put("Records", varJsonArrayP);
+            varJsonObjectResultado.addProperty("Result", "OK");
+            varJsonObjectResultado.add("Records", varJsonArrayP);
         } catch (Exception e) {
             e.printStackTrace();
-            varJsonObjectResultado.put("Result", "ERROR");
-            varJsonObjectResultado.put("Message", e.getMessage());
+            varJsonObjectResultado.addProperty("Result", "ERROR");
+            varJsonObjectResultado.addProperty("Message", e.getMessage());
         }
         return varJsonArrayP;
     }
